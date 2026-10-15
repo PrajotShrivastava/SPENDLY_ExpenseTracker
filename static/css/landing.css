@@ -27,10 +27,11 @@
     --lp-track: #2f2e2b;
 }
 
+/* Full-bleed so the marquee headlines can span the viewport;
+   the dashboard window keeps its own max-width below */
 .lp-hero {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 3.5rem 2rem 4rem;
+    padding: 3.5rem 0 4rem;
+    overflow-x: clip;
 }
 
 .lp-hero-inner {
@@ -71,8 +72,76 @@
 
 .lp-title-accent { color: var(--lp-green); }
 
+.lp-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Marquee headlines */
+
+.lp-marquee {
+    display: block;
+    overflow: hidden;
+    /* Room for descenders (y, p, g) inside the clipped row */
+    padding-block: 0.04em 0.1em;
+    /* Fade the text in and out at the screen edges */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.lp-marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+}
+
+.lp-marquee-group { display: flex; }
+
+.lp-marquee-item {
+    white-space: nowrap;
+    /* Spacing lives inside each item so both groups are exactly equal in width */
+    padding-inline-end: 0.6em;
+}
+
+.lp-marquee-ltr .lp-marquee-track { animation: lp-marquee-ltr 60s linear infinite; }
+.lp-marquee-rtl .lp-marquee-track { animation: lp-marquee-rtl 66s linear infinite; }
+
+@keyframes lp-marquee-ltr {
+    from { transform: translate3d(-50%, 0, 0); }
+    to   { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes lp-marquee-rtl {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Reduced motion: a static, centred two-line headline */
+@media (prefers-reduced-motion: reduce) {
+    .lp-marquee {
+        -webkit-mask-image: none;
+                mask-image: none;
+    }
+
+    .lp-marquee-track {
+        animation: none !important;
+        width: auto;
+        justify-content: center;
+    }
+
+    .lp-marquee-group + .lp-marquee-group,
+    .lp-marquee-item + .lp-marquee-item { display: none; }
+
+    .lp-marquee-item { padding-inline-end: 0; }
+}
+
 .lp-subtitle {
-    max-width: 600px;
+    max-width: 632px;
+    padding-inline: 1rem;
     margin: 0 auto 3rem;
     font-size: 1.25rem;
     line-height: 1.65;
@@ -84,6 +153,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
+    padding-inline: 1rem;
 }
 
 .lp-btn {
@@ -106,6 +176,9 @@
 /* Mock app window */
 
 .lp-window {
+    width: calc(100% - 4rem);
+    max-width: 896px;
+    margin: 0 auto;
     background: var(--paper-warm);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -262,7 +335,8 @@
 .video-modal-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
 @media (max-width: 700px) {
-    .lp-hero { padding: 2.5rem 1rem 3rem; }
+    .lp-hero { padding: 2.5rem 0 3rem; }
+    .lp-window { width: calc(100% - 2rem); }
     .lp-subtitle { font-size: 1.05rem; }
     .lp-stats { grid-template-columns: 1fr; }
     .lp-bar-row { grid-template-columns: 56px 1fr; gap: 0.75rem; }

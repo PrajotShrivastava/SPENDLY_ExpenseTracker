@@ -15,8 +15,26 @@
             Free to use · No credit card needed
         </div>
         <h1 class="lp-title">
-            Track every rupee.<br>
-            <span class="lp-title-accent">Know where it goes.</span>
+            <span class="lp-sr-only">Track every rupee. Know where it goes.</span>
+            {# Each track holds two identical groups; sliding by -50% lands on an exact copy, so the loop is seamless #}
+            <span class="lp-marquee lp-marquee-ltr" aria-hidden="true">
+                <span class="lp-marquee-track">
+                    {% for _ in range(2) %}
+                    <span class="lp-marquee-group">
+                        {% for _ in range(6) %}<span class="lp-marquee-item">Track Every Rupee.</span>{% endfor %}
+                    </span>
+                    {% endfor %}
+                </span>
+            </span>
+            <span class="lp-marquee lp-marquee-rtl lp-title-accent" aria-hidden="true">
+                <span class="lp-marquee-track">
+                    {% for _ in range(2) %}
+                    <span class="lp-marquee-group">
+                        {% for _ in range(6) %}<span class="lp-marquee-item">Know Where It Goes.</span>{% endfor %}
+                    </span>
+                    {% endfor %}
+                </span>
+            </span>
         </h1>
         <p class="lp-subtitle">
             Spendly helps you log expenses, spot patterns, and stay
