@@ -205,6 +205,62 @@
 .lp-bar-travel { background: var(--lp-bar-travel); }
 .lp-bar-bills { background: var(--lp-bar-bills); }
 
+/* ------------------------------------------------------------------ */
+/* Landing page — video modal                                          */
+/* ------------------------------------------------------------------ */
+
+.video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.video-modal[hidden] { display: none; }
+
+.video-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+}
+
+.video-modal-frame {
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.video-modal-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.video-modal-close {
+    position: absolute;
+    top: -2.75rem;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.video-modal-close:hover { background: rgba(255, 255, 255, 0.3); }
+.video-modal-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
 @media (max-width: 700px) {
     .lp-hero { padding: 2.5rem 1rem 3rem; }
     .lp-subtitle { font-size: 1.05rem; }

@@ -24,7 +24,7 @@
         </p>
         <div class="lp-actions">
             <a href="{{ url_for('register') }}" class="lp-btn">Create free account</a>
-            <button type="button" class="lp-btn">See how it works</button>
+            <button type="button" class="lp-btn" id="video-open" aria-haspopup="dialog" aria-controls="video-modal">See how it works</button>
         </div>
     </div>
 
@@ -68,6 +68,20 @@
     </div>
 </section>
 
+<div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="How Spendly works" hidden>
+    <div class="video-modal-content">
+        <button type="button" class="video-modal-close" id="video-close" aria-label="Close video">&times;</button>
+        <div class="video-modal-frame">
+            {# Placeholder video — replace the ID in data-src with the real one #}
+            <iframe id="video-iframe"
+                    data-src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?autoplay=1&rel=0"
+                    title="How Spendly works"
+                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
 <section class="features">
     <div class="features-inner">
         <div class="feature-card">
@@ -96,4 +110,43 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // "See how it works" video modal
+    (function () {
+        var modal = document.getElementById('video-modal');
+        var openBtn = document.getElementById('video-open');
+        var closeBtn = document.getElementById('video-close');
+        var iframe = document.getElementById('video-iframe');
+
+        function openModal() {
+            iframe.src = iframe.dataset.src;
+            modal.hidden = false;
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
+
+        function closeModal() {
+            // Clearing src unloads the player so the video stops completely
+            iframe.src = 'about:blank';
+            modal.hidden = true;
+            document.body.style.overflow = '';
+            openBtn.focus();
+        }
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+
+        // Clicks on the backdrop (outside the content box) close the modal
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !modal.hidden) closeModal();
+        });
+    })();
+</script>
 {% endblock %}
