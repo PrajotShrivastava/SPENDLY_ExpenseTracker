@@ -1,6 +1,6 @@
 <div align="center">
 
-# 💰 Expense Tracker
+# ***Spendly*** - Expense Tracker
 
 📊 Track Your Expenses. Manage Your Money. Build Better Habits.
 
