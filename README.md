@@ -1,6 +1,7 @@
 <div align="center">
-<h1 style="color: #00C853;">Spendly</h1>
-## Expense Tracker
+  <h1><b><i><span style="color: #00C853;">Spendly</span></i></b></h1>
+  <h2>Expense Tracker</h2>
+</div>
 
 📊 Track Your Expenses. Manage Your Money. Build Better Habits.
 
