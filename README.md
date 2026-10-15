@@ -13,7 +13,7 @@ A simple and intuitive web application to record, manage, and track your daily e
 
 </div>
 
-⸻
+<hr>
 
 🌟 About The Project
 
@@ -29,7 +29,7 @@ Built using Python and Flask for the backend, along with HTML, CSS, and JavaScri
 * 🧑‍💻 Practice full-stack web development.
 * 📈 Create a foundation for future expense analytics.
 
-⸻
+<hr>
 
 ✨ Features
 
@@ -42,7 +42,7 @@ Feature	Description
 
 💡 Features listed above should match the functionality implemented in your current version of the project.
 
-⸻
+<hr>
 
 🛠️ Tech Stack
 
@@ -58,7 +58,7 @@ Technology	Role
 
 </div>
 
-⸻
+<hr>
 
 📂 Project Structure
 
@@ -80,7 +80,7 @@ expense-tracker/
 │
 └── 📄 README.md
 
-⸻
+<hr>
 
 🚀 Getting Started
 
@@ -131,7 +131,7 @@ Open the local URL displayed in your terminal in your browser.
 
 🎉 Congratulations! Your Expense Tracker is running locally.
 
-⸻
+<hr>
 
 📸 Screenshots
 
@@ -153,7 +153,7 @@ To add a screenshot:
 
 ![Expense Tracker Dashboard](screenshots/dashboard.png)
 
-⸻
+<hr>
 
 🗺️ Future Roadmap
 
@@ -167,7 +167,7 @@ Here are some improvements planned for future versions:
 * 🔐 User authentication
 * 📱 Improved mobile responsiveness
 
-⸻
+<hr>
 
 💡 What I Learned
 
@@ -180,7 +180,7 @@ Through this project, I am exploring and strengthening my understanding of:
 * 🔗 Connecting frontend interfaces with backend logic
 * 🛠️ Version control using Git and GitHub
 
-⸻
+<hr>
 
 🤝 Contributing
 
@@ -194,7 +194,7 @@ If you would like to contribute:
 4. Commit your changes.
 5. Open a pull request.
 
-⸻
+<hr>
 
 👨‍💻 Author
 
@@ -206,7 +206,7 @@ Prajot Shrivastava
 
 </div>
 
-⸻
+<hr>
 
 <div align="center">
 
