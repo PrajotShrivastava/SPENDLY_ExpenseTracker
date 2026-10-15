@@ -1,14 +1,11 @@
 <div align="center">
   <h1><b><i><span style="color: #00C853;">Spendly-Expense Tracker</span></i></b></h1>
 </div>
+<br>
 
 📊 Track Your Expenses. Manage Your Money. Build Better Habits.
 
 A simple and intuitive web application to record, manage, and track your daily expenses.
-
-<br>
-<br>
-
 💸 Take control of your expenses, one transaction at a time!
 
 </div>
