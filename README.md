@@ -1,6 +1,6 @@
 <div align="center">
 
-💰 Expense Tracker
+#💰 Expense Tracker
 
 📊 Track Your Expenses. Manage Your Money. Build Better Habits.
 
