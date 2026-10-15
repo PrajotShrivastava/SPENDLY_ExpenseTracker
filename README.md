@@ -60,10 +60,10 @@ Technology	Role
 
 <hr>
 
-📂 Project Structure
+## 📂 Project Structure
 
+```text
 expense-tracker/
-│
 ├── app.py
 ├── requirements.txt
 ├── .gitignore
@@ -81,21 +81,23 @@ expense-tracker/
 └── static/
     ├── css/
     │   └── style.css
-    │
     └── js/
         └── main.js
+```
 
-📌 Key Files
+### 📌 Key Files
 
-File	Description
-app.py	Flask application and routes
-db.py	Database operations
-base.html	Shared HTML layout
-landing.html	Landing page
-login.html	Login page
-register.html	Registration page
-style.css	Application styling
-main.js	Client-side JavaScript
+| File | Description |
+|:---|:---|
+| `app.py` | Flask application and routes |
+| `requirements.txt` | Project dependencies |
+| `database/db.py` | Database operations |
+| `templates/base.html` | Shared HTML layout |
+| `templates/landing.html` | Landing page |
+| `templates/login.html` | Login page |
+| `templates/register.html` | Registration page |
+| `static/css/style.css` | Application styling |
+| `static/js/main.js` | Client-side JavaScript |
 
 <hr>
 
