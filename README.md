@@ -60,25 +60,22 @@ Technology	Role
 
 <hr>
 
-📂 Project Structure
-
 expense-tracker/
-│
-├── 📄 app.py
-├── 📄 requirements.txt
-├── 📄 .gitignore
-│
-├── 📁 database/
-│   └── Database-related files
-│
-├── 📁 static/
-│   ├── 📁 css/
-│   └── 📁 js/
-│
-├── 📁 templates/
-│   └── HTML templates
-│
-└── 📄 README.md
+├── app.py                 # Flask app: all routes live here
+├── requirements.txt       # flask, werkzeug, pytest, pytest-flask
+├── .gitignore             # ignores venv/, expense_tracker.db, __pycache__, .env
+├── database/
+│   ├── __init__.py        # empty (makes it a package)
+│   └── db.py              # stub: get_db(), init_db(), seed_db() still to be written
+├── templates/             # Jinja2 HTML
+│   ├── base.html          # shared layout: navbar, fonts, CSS/JS includes, blocks
+│   ├── landing.html       # marketing/home page ("Track Every Rupee")
+│   ├── login.html         # sign-in form
+│   └── register.html      # sign-up form
+└── static/
+    ├── css/style.css      # all styling (~530 lines)
+    └── js/main.js         # empty, to be filled in as features are added
+
 
 <hr>
 
