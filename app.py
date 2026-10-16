@@ -1,6 +1,11 @@
 from flask import Flask, render_template
 
+from database.db import init_db, seed_db
+
 app = Flask(__name__)
+
+init_db()
+seed_db()
 
 
 # ------------------------------------------------------------------ #
