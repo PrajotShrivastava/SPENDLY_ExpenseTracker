@@ -1,4 +1,4 @@
-/<div align="center">
+<div align="center">
   <h1><b><i><span style="color: #00C853;">Spendly-Expense Tracker</span></i></b></h1>
 </div>
 <br>
