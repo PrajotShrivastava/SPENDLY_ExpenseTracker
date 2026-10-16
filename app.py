@@ -11,6 +11,7 @@ from database.db import (
     CATEGORIES,
     add_expense as insert_expense,
     create_user,
+    delete_expense as remove_expense,
     get_category_totals,
     get_expense,
     get_expense_summary,
@@ -268,9 +269,21 @@ def render_expense_form(form, error, expense=None):
     ), 400 if error else 200
 
 
-@app.route("/expenses/<int:id>/delete")
+@app.route("/expenses/<int:id>/delete", methods=["GET", "POST"])
+@login_required
 def delete_expense(id):
-    return "Delete expense — coming in Step 9"
+    expense = get_expense(id, session["user_id"])
+    if expense is None:
+        abort(404)
+
+    # GET only asks for confirmation; deleting needs the POST from that page,
+    # so a prefetched or forged link can't remove anything.
+    if request.method == "GET":
+        return render_template("expense_delete.html", expense=expense)
+
+    remove_expense(id, session["user_id"])
+    flash(f"Deleted {expense['description'] or expense['category']} ({format_inr(expense['amount'])}).")
+    return redirect(url_for("profile"))
 
 
 if __name__ == "__main__":

@@ -60,6 +60,9 @@
 
         <p class="auth-switch">
             <a href="{{ url_for('profile') }}">Back to profile</a>
+            {% if expense %}
+            · <a href="{{ url_for('delete_expense', id=expense.id) }}" class="link-danger">Delete expense</a>
+            {% endif %}
         </p>
 
     </div>

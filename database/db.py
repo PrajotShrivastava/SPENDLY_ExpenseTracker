@@ -123,6 +123,13 @@ def update_expense(expense_id, user_id, amount, category, date, description=None
         return cur.rowcount == 1
 
 
+def delete_expense(expense_id, user_id):
+    """Delete an expense the user owns. Returns True if a row was removed."""
+    with get_db() as conn:
+        cur = conn.execute("DELETE FROM expenses WHERE id = ? AND user_id = ?", (expense_id, user_id))
+        return cur.rowcount == 1
+
+
 # ------------------------------------------------------------------ #
 # Expense summaries                                                   #
 # ------------------------------------------------------------------ #
