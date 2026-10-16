@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Profile — Spendly{% endblock %}
+
+{% block content %}
+
+<section class="profile-section">
+    <div class="profile-container">
+
+        <div class="profile-header">
+            <div class="profile-avatar" aria-hidden="true">{{ user.name[:1] | upper }}</div>
+            <div>
+                <h1 class="profile-name">{{ user.name }}</h1>
+                <p class="profile-meta">
+                    {{ user.email }} · Member since {{ user.created_at | date_format("%B %Y") }}
+                </p>
+            </div>
+            <a href="{{ url_for('add_expense') }}" class="btn-primary profile-add">+ Add expense</a>
+        </div>
+
+        <div class="profile-stats">
+            <div class="profile-stat">
+                <p class="profile-stat-label">This month</p>
+                <p class="profile-stat-value">{{ summary.month_total | inr }}</p>
+                <p class="profile-stat-note">{{ summary.month_count }} expense{{ "" if summary.month_count == 1 else "s" }}</p>
+            </div>
+            <div class="profile-stat">
+                <p class="profile-stat-label">All time</p>
+                <p class="profile-stat-value">{{ summary.total | inr }}</p>
+                <p class="profile-stat-note">{{ summary.count }} expense{{ "" if summary.count == 1 else "s" }}</p>
+            </div>
+            <div class="profile-stat">
+                <p class="profile-stat-label">Top category</p>
+                <p class="profile-stat-value">{{ categories[0].category if categories else "—" }}</p>
+                <p class="profile-stat-note">{{ categories[0].total | inr if categories else "No spending yet" }}</p>
+            </div>
+        </div>
+
+        {% if summary.count %}
+        <div class="profile-grid">
+            <div class="profile-card">
+                <h2 class="profile-card-title">Spending by category</h2>
+                <ul class="profile-categories">
+                    {% for c in categories %}
+                    <li class="profile-category">
+                        <span class="profile-category-name">{{ c.category }}</span>
+                        <span class="profile-category-track">
+                            <span class="profile-category-bar" style="width: {{ (c.total / top_total * 100) | round(1) }}%"></span>
+                        </span>
+                        <span class="profile-category-amt">{{ c.total | inr }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="profile-card">
+                <h2 class="profile-card-title">Recent expenses</h2>
+                <ul class="profile-recent">
+                    {% for e in recent %}
+                    <li class="profile-expense">
+                        <div>
+                            <p class="profile-expense-desc">{{ e.description or e.category }}</p>
+                            <p class="profile-expense-meta">{{ e.category }} · {{ e.date | date_format }}</p>
+                        </div>
+                        <div class="profile-expense-side">
+                            <span class="profile-expense-amt">{{ e.amount | inr }}</span>
+                            <a href="{{ url_for('edit_expense', id=e.id) }}" class="profile-expense-edit"
+                               aria-label="Edit {{ e.description or e.category }}">Edit</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% else %}
+        <div class="profile-card profile-empty">
+            <h2 class="profile-card-title">No expenses yet</h2>
+            <p>Once you start adding expenses, your spending summary will show up here.
+               <a href="{{ url_for('add_expense') }}">Add your first one</a>.</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

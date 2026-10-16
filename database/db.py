@@ -67,6 +67,11 @@ def init_db():
 # Users                                                               #
 # ------------------------------------------------------------------ #
 
+def get_user_by_id(user_id):
+    with get_db() as conn:
+        return conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+
+
 def get_user_by_email(email):
     with get_db() as conn:
         return conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
@@ -80,6 +85,85 @@ def create_user(name, email, password):
             (name, email, hash_password(password)),
         )
         return cur.lastrowid
+
+
+# ------------------------------------------------------------------ #
+# Expenses                                                            #
+# ------------------------------------------------------------------ #
+
+def add_expense(user_id, amount, category, date, description=None):
+    """Insert an expense and return its id."""
+    with get_db() as conn:
+        cur = conn.execute(
+            "INSERT INTO expenses (user_id, amount, category, date, description) VALUES (?, ?, ?, ?, ?)",
+            (user_id, amount, category, date, description),
+        )
+        return cur.lastrowid
+
+
+def get_expense(expense_id, user_id):
+    """Return the expense only if it belongs to user_id, otherwise None."""
+    with get_db() as conn:
+        return conn.execute(
+            "SELECT * FROM expenses WHERE id = ? AND user_id = ?", (expense_id, user_id)
+        ).fetchone()
+
+
+def update_expense(expense_id, user_id, amount, category, date, description=None):
+    """Update an expense the user owns. Returns True if a row was changed."""
+    with get_db() as conn:
+        cur = conn.execute(
+            """
+            UPDATE expenses
+            SET amount = ?, category = ?, date = ?, description = ?
+            WHERE id = ? AND user_id = ?
+            """,
+            (amount, category, date, description, expense_id, user_id),
+        )
+        return cur.rowcount == 1
+
+
+# ------------------------------------------------------------------ #
+# Expense summaries                                                   #
+# ------------------------------------------------------------------ #
+
+def get_expense_summary(user_id):
+    """Totals across all time and for the current calendar month."""
+    with get_db() as conn:
+        return conn.execute(
+            """
+            SELECT COUNT(*)                                                         AS count,
+                   COALESCE(SUM(amount), 0)                                         AS total,
+                   COALESCE(SUM(CASE WHEN date >= date('now', 'start of month')
+                                     THEN amount END), 0)                           AS month_total,
+                   COUNT(CASE WHEN date >= date('now', 'start of month') THEN 1 END) AS month_count
+            FROM expenses
+            WHERE user_id = ?
+            """,
+            (user_id,),
+        ).fetchone()
+
+
+def get_category_totals(user_id):
+    with get_db() as conn:
+        return conn.execute(
+            """
+            SELECT category, SUM(amount) AS total
+            FROM expenses
+            WHERE user_id = ?
+            GROUP BY category
+            ORDER BY total DESC
+            """,
+            (user_id,),
+        ).fetchall()
+
+
+def get_recent_expenses(user_id, limit=5):
+    with get_db() as conn:
+        return conn.execute(
+            "SELECT * FROM expenses WHERE user_id = ? ORDER BY date DESC, id DESC LIMIT ?",
+            (user_id, limit),
+        ).fetchall()
 
 
 # ------------------------------------------------------------------ #

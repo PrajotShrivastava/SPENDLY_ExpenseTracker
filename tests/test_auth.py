@@ -102,3 +102,41 @@ def test_logged_in_user_is_redirected_away_from_auth_pages(client, path):
     resp = client.get(path)
     assert resp.status_code == 302
     assert resp.headers["Location"].endswith("/profile")
+
+
+# ------------------------------------------------------------------ #
+# Logout and navbar                                                   #
+# ------------------------------------------------------------------ #
+
+def test_logout_clears_session_and_redirects_home(client):
+    login(client)
+    resp = client.get("/logout")
+    assert resp.status_code == 302
+    assert resp.headers["Location"].endswith("/")
+    with client.session_transaction() as sess:
+        assert "user_id" not in sess
+
+
+def test_logout_when_logged_out_is_harmless(client):
+    assert client.get("/logout").status_code == 302
+
+
+def test_navbar_shows_sign_in_when_logged_out(client):
+    html = client.get("/").get_data(as_text=True)
+    assert 'href="/login"' in html
+    assert "Log out" not in html
+
+
+def test_navbar_shows_user_and_logout_when_logged_in(client):
+    login(client)
+    html = client.get("/").get_data(as_text=True)
+    assert "Demo User" in html
+    assert 'href="/logout"' in html
+    assert 'href="/login"' not in html
+
+
+def test_navbar_escapes_user_name(client):
+    register(client, name="<script>alert(1)</script>")
+    html = client.get("/").get_data(as_text=True)
+    assert "<script>alert(1)</script>" not in html
+    assert "&lt;script&gt;" in html

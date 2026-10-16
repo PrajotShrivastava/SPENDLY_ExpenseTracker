@@ -39,13 +39,21 @@
                         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
                     </svg>
                 </button>
+                {% if session.user_id %}
+                <a href="{{ url_for('profile') }}">{{ session.user_name }}</a>
+                <a href="{{ url_for('logout') }}" class="nav-cta">Log out</a>
+                {% else %}
                 <a href="{{ url_for('login') }}">Sign in</a>
                 <a href="{{ url_for('register') }}" class="nav-cta">Get started</a>
+                {% endif %}
             </div>
         </div>
     </nav>
 
     <main class="main-content">
+        {% for message in get_flashed_messages() %}
+        <div class="flash" role="status">{{ message }}</div>
+        {% endfor %}
         {% block content %}{% endblock %}
     </main>
 
