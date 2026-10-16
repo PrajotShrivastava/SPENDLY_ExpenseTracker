@@ -64,6 +64,25 @@ def init_db():
 
 
 # ------------------------------------------------------------------ #
+# Users                                                               #
+# ------------------------------------------------------------------ #
+
+def get_user_by_email(email):
+    with get_db() as conn:
+        return conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+
+
+def create_user(name, email, password):
+    """Insert a user and return their id. Raises sqlite3.IntegrityError if the email is taken."""
+    with get_db() as conn:
+        cur = conn.execute(
+            "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
+            (name, email, hash_password(password)),
+        )
+        return cur.lastrowid
+
+
+# ------------------------------------------------------------------ #
 # Sample data                                                         #
 # ------------------------------------------------------------------ #
 
